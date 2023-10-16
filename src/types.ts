@@ -6,6 +6,8 @@ export type User  = {
 
 }
 
+
+
 export type Message = {
   id: string
   content: string
@@ -15,6 +17,7 @@ export type Message = {
 
 export type Chat = {
   id:string
+  chatName: string;
   messages: Message[]
   lastMessage: Message
   members: User[]

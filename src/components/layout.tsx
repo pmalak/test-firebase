@@ -1,9 +1,14 @@
-import React, { FC, FunctionComponent } from "react";
+import React, { FC, ReactNode } from "react";
+
+
 import { Box } from "@material-ui/core";
 import { COLORS } from "@/constants/colors";
 import styled from "styled-components";
 
-export const Layout: FunctionComponent = ({ children }) => {
+type Props = {
+  children: JSX.Element
+}	
+export const Layout: FC<Props> = ({ children }) => {
   return (
     <MainLayout>
       <MaxWidth>{children}</MaxWidth>
