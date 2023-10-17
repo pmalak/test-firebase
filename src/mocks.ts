@@ -94,4 +94,6 @@ const chatsMock: Chat[] = [
   },
 ];
 
-export { users, chatsMock };
+const currentUser = users[2]
+
+export { users, chatsMock , currentUser};

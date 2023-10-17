@@ -3,7 +3,7 @@ import { chatsMock } from "@/mocks";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 
-import React from "react";
+import React, { useState } from "react";
 import { Messages } from "./components/messages";
 import styled from "styled-components";
 import { Input } from "./components/input";
@@ -15,14 +15,17 @@ const Chat: NextPage = ({}) => {
 
   const chat = chatsMock.find((chat) => chat.id === chatId);
 
+  const [messages, setMessages] = useState(chat?.messages ?? []);
+
+  console.log("messages", messages);
+
   return (
     <Wrapper>
       {/* TODO: fix */}
       <ChatHeader chatName={chat?.chatName ?? "name"} />
+      <Messages messages={messages} />
 
-      <Messages messages={chat?.messages} />
-
-      <Input />
+      <Input setMessages={setMessages} />
     </Wrapper>
   );
 };

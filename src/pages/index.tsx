@@ -25,7 +25,7 @@ export default function Home() {
             src="https://crystallize.com/static/logo/crystallize-logo.svg"
             alt=""
           />
-          <Typography variant="h2" >Chat</Typography>
+          <Typography variant="h4" gutterBottom >chat</Typography>
 
           <Link href="/dashboard">
             <Button>Login</Button>
