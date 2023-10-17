@@ -3,15 +3,15 @@ import { Chat, Message, User } from "./types";
 const users: User[] = [
   {
     id: "user1",
-    name: "Alice",
+    name: "Vasil",
     email: "alice@example.com",
-    avatarUrl: "https://avatar-url.com/alice.jpg",
+    avatarUrl: "https://media.licdn.com/dms/image/C4E03AQE4jx5uZu8Axg/profile-displayphoto-shrink_800_800/0/1602924586098?e=1703116800&v=beta&t=4idmHjrPNh3phrNXNJ0bohKzudXsXYG9p-zjCd807mk",
   },
   {
     id: "user2",
-    name: "Bob",
+    name: "Sébastien",
     email: "bob@example.com",
-    avatarUrl: "https://avatar-url.com/bob.jpg",
+    avatarUrl: "https://media.licdn.com/dms/image/C4E03AQHkksL7UmWq6w/profile-displayphoto-shrink_800_800/0/1516315321563?e=1703116800&v=beta&t=khM8LCe-cM_B1biMDiMTY4QzwwKhB-OtpDNV-GqngsM",
   },
   {
     id: "user3",
@@ -42,7 +42,7 @@ const chat1Messages: Message[] = [
   },
   {
     id: "message4",
-    content: "It's going well. Thanks!",
+    content: "It's going well. Thanks!, It's going well. Thanks! It's going well. Thanks!",
     author: users[0], // Alice
     createdAt: new Date(),
   },
@@ -75,13 +75,14 @@ const chat2Messages: Message[] = [
   },
 ];
 
-const chats: Chat[] = [
+const chatsMock: Chat[] = [
   {
     id: "chat1",
     messages: chat1Messages,
     lastMessage: chat1Messages[3],
     members: [users[0], users[1]],
-    chatName: "karl"
+    chatName: "karl",
+    avatar: users[0].avatarUrl,
   },
   {
     id: "chat2",
@@ -89,7 +90,8 @@ const chats: Chat[] = [
     messages: chat2Messages,
     lastMessage: chat2Messages[3],
     members: [users[1], users[2]],
+    avatar: users[1].avatarUrl
   },
 ];
 
-export { users, chats };
+export { users, chatsMock };

@@ -9,8 +9,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={baseMuiTheme}>
       <StylesProvider injectFirst>
+        <Layout>
           <Component {...pageProps} />
-        
+        </Layout>
       </StylesProvider>
     </ThemeProvider>
   );

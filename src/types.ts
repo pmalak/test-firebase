@@ -21,6 +21,7 @@ export type Chat = {
   messages: Message[]
   lastMessage: Message
   members: User[]
+  avatar: string;
 }
 
 

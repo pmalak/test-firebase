@@ -1,14 +1,19 @@
 import React from "react";
 import { NextPage } from "next";
-import { Chats } from "./chats";
-import { chats } from "@/mocks";
+import { Chats } from "./components/chats";
+import { chatsMock } from "@/mocks";
 import { Layout } from "@/components/layout";
+import { Typography } from "@material-ui/core";
 
 const Dashboard: NextPage = ({}) => {
   return (
-    <Layout>
-      <Chats chats={chats} />
-    </Layout>
+    <>
+      <Typography variant="h4" gutterBottom>
+        Header
+      </Typography>
+
+      <Chats chats={chatsMock} />
+    </>
   );
 };
 
