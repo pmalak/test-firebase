@@ -7,8 +7,11 @@ import { Button, Typography } from "@material-ui/core";
 import { Chat } from "@/types";
 import { useFirebaseContext } from "@/components/firebase-context";
 import { addDoc, collection, onSnapshot, query } from "firebase/firestore";
+import { useRouter } from "next/router";
 
 const Dashboard: NextPage = ({}) => {
+  const router = useRouter()
+
   const [realChats, setRealChats] = useState<Chat[]>([]);
 
   const { db } = useFirebaseContext();
@@ -16,20 +19,22 @@ const Dashboard: NextPage = ({}) => {
   const chastRef = collection(db, "chats");
 
   const createNewChat = async () => {
-    // if (newChatName && newChatMessages.length > 0) {
+    
     // Create a new chat room
     const newChat: Chat = {
       id: `chat${new Date().getTime()}`,
       messages: [],
       lastMessage: null,
       members: [users[0]],
-      chatName: "karl",
-      avatar: users[0].avatarUrl,
+      chatName: "Dalsi test",
+      avatar: users[1].avatarUrl,
     };
 
     try {
       const docRef = await addDoc(chastRef, newChat);
-      console.log("Document written with ID: ", docRef.id);
+    
+      router.push(`/chat/${newChat.id}`)
+
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -47,7 +52,7 @@ const Dashboard: NextPage = ({}) => {
         chats.push({...doc.data()});
       });
       setRealChats(chats);
-      console.log("Current chats in CA: ", chats);
+      
     });
 
     return unsubscribe;

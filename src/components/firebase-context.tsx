@@ -17,8 +17,11 @@ export const useFirebaseContext = () => {
 
   return context;
 };
+type Props = {
+  children: JSX.Element;
+};
 
-export const FirebaseContextProvider = ({ children }) => {
+export const FirebaseContextProvider = ({ children }: Props) => {
   const firebaseConfig = {
     apiKey: "AIzaSyDtj6iqztI1iNR5A-e1EZZyo84RUBivxD8",
     authDomain: "crystallize-chat-by-pm.firebaseapp.com",
