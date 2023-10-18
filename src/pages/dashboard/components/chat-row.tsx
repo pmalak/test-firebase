@@ -27,11 +27,11 @@ export const ChatRow = ({
         </Box>
         <Typography style={{ fontSize: "15px" }}>{chatName}</Typography>
         <Typography style={{ fontSize: "13px" }} noWrap className="message">
-          {lastMessage.content}
+          {lastMessage?.content}
         </Typography>
 
         <Typography style={{ fontSize: "13px" }} >
-          {lastMessage.createdAt.toLocaleDateString()}
+          {lastMessage?.createdAt.toLocaleDateString()}
         </Typography>
       </RowWrapper>
     </Link>

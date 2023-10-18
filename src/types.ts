@@ -19,7 +19,7 @@ export type Chat = {
   id:string
   chatName: string;
   messages: Message[]
-  lastMessage: Message
+  lastMessage: Message | null
   members: User[]
   avatar: string;
 }
