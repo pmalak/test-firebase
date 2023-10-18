@@ -18,19 +18,23 @@ const Chat: NextPage = ({}) => {
   const [messages, setMessages] = useState(chat?.messages ?? []);
 
   console.log("messages", messages);
+  if (chat) {
+    return (
+      <Wrapper>
+        {/* TODO: fix */}
+        <ChatHeader chat={chat!} />
+        <Messages messages={messages} />
 
-  return (
-    <Wrapper>
-      {/* TODO: fix */}
-      <ChatHeader chatName={chat?.chatName ?? "name"} />
-      <Messages messages={messages} />
+        <Input setMessages={setMessages} />
+      </Wrapper>
+    );
+  }
 
-      <Input setMessages={setMessages} />
-    </Wrapper>
-  );
+  return null;
 };
 
 const Wrapper = styled.div`
+  
   height: 100%;
   display: grid;
   grid-template-rows: auto 1fr auto;

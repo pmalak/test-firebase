@@ -8,14 +8,11 @@ type Props = {
 };
 
 export const Chats: FC<Props> = ({ chats }) => {
-
-
-    
-
-
   return (
     <div>
-      {chats.map((chat => (<ChatRow  chat={chat}/>)))}
+      {chats.map((chat) => (
+        <ChatRow chat={chat} key={chat.id} />
+      ))}
     </div>
   );
 };

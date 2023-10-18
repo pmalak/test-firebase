@@ -25,7 +25,7 @@ export const Messages = ({ messages }: Props) => {
     <ScrollWrapper>
       <MessageWrapper>
         {messages?.map((message) => (
-          <Message isMyMessage={message.author.id === currentUser.id}>
+          <Message isMyMessage={message.author.id === currentUser.id} key={message.id}>
             {/* <span>{message.author.name}</span> */}
 
             <Typography>{message.content}</Typography>

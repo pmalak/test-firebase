@@ -12,7 +12,7 @@ export const ChatRow = ({
   chat: { id, chatName, lastMessage, avatar },
 }: Props) => {
   return (
-    <Link href={`/chat/${id}`} key={chatName}>
+    <Link href={`/chat/${id}`}>
       <RowWrapper>
         <Box height="44px" className="avatarWrapper">
           <Avatar

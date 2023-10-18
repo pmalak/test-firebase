@@ -5,7 +5,6 @@ import SendIcon from "@material-ui/icons/Send";
 import { Message } from "@/types";
 import { currentUser } from "@/mocks";
 
-
 type Props = {
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
 };
@@ -17,15 +16,22 @@ export const Input = ({ setMessages }: Props) => {
     setValue(event.target.value);
   };
 
-  console.log("value", value)
+  console.log("value", value);
 
   const handleSubmit = () => {
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { id: "ss", author: currentUser, content: value, createdAt: new Date() },
-    ]);
+    if (value !== "") {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          id: "ss",
+          author: currentUser,
+          content: value,
+          createdAt: new Date(),
+        },
+      ]);
 
-    setValue("")
+      setValue("");
+    }
   };
 
   useEffect(() => {
