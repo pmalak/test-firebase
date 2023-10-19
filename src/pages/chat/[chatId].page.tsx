@@ -1,5 +1,3 @@
-import { chatsMock } from "@/mocks";
-
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 
@@ -9,18 +7,14 @@ import styled from "styled-components";
 import { Input } from "./components/input";
 import { ChatHeader } from "./components/chat-header";
 import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
-import { useFirebaseContext } from "@/components/firebase-context";
 import { Chat } from "@/types";
+import db from "@/utils/firebase";
 
 const ChatPage: NextPage = ({}) => {
   const router = useRouter();
   const { chatId } = router.query;
 
-
   const [realChat, setRealChat] = useState<Chat | null>(null);
-
-
-  const { db } = useFirebaseContext();
 
   const chastRef = collection(db, "chats");
 
@@ -37,14 +31,14 @@ const ChatPage: NextPage = ({}) => {
     }
   }, [chatId]);
 
-  if (chatId &&  realChat) {
+  if (chatId && realChat) {
     return (
       <Wrapper>
         {/* TODO: fix */}
         <ChatHeader chat={realChat} />
         <Messages messages={realChat?.messages ?? []} />
 
-        <Input  />
+        <Input />
       </Wrapper>
     );
   }

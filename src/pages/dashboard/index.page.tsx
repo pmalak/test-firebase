@@ -4,7 +4,6 @@ import { Chats } from "./components/chats";
 import { users } from "@/mocks";
 import { Button } from "@material-ui/core";
 import { Chat } from "@/types";
-import { useFirebaseContext } from "@/components/firebase-context";
 import {
   FieldPath,
   addDoc,
@@ -16,13 +15,15 @@ import {
 } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { DashboardHeader } from "./components/header";
+import db from "@/utils/firebase";
+import { useUserContext } from "@/components/user-context";
 
 const Dashboard: NextPage = ({}) => {
   const router = useRouter();
-
+  const {userContext} = useUserContext()
   const [realChats, setRealChats] = useState<Chat[]>([]);
 
-  const { db } = useFirebaseContext();
+  
 
   const chastRef = collection(db, "chats");
 

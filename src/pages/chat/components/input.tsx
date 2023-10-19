@@ -13,17 +13,16 @@ import {
   doc,
   arrayUnion,
 } from "firebase/firestore";
-import { useFirebaseContext } from "@/components/firebase-context";
 import { useRouter } from "next/router";
+import db from "@/utils/firebase";
 
 type Props = {
   // setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
 };
 
-export const Input = ({  }: Props) => {
+export const Input = ({}: Props) => {
   const router = useRouter();
   const { chatId } = router.query;
-  const { db } = useFirebaseContext();
 
   const docS = doc(db, "chats", chatId as string);
 

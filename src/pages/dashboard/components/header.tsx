@@ -1,8 +1,11 @@
+import { useUserContext } from "@/components/user-context";
 import { currentUser } from "@/mocks";
 import { Avatar } from "@material-ui/core";
 import styled from "styled-components";
 
 export const DashboardHeader = () => {
+  const { userContext } = useUserContext();
+
   return (
     <Wrapper>
       <img
@@ -11,7 +14,7 @@ export const DashboardHeader = () => {
       />
 
       <Avatar
-        src={currentUser.avatarUrl}
+        src={userContext.currentUser.avatarUrl}
         style={{
           height: "32px",
           width: "32px",

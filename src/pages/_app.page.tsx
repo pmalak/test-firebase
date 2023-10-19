@@ -5,17 +5,17 @@ import { StylesProvider } from "@material-ui/core";
 import { ThemeProvider } from "styled-components";
 import { baseMuiTheme } from "@/styles/baseMuiTheme";
 import { initializeApp } from "firebase/app";
-import { FirebaseContextProvider } from "@/components/firebase-context";
+import { UserContextProvider } from "@/components/user-context";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={baseMuiTheme}>
       <StylesProvider injectFirst>
-        <FirebaseContextProvider>
+        <UserContextProvider>
           <Layout>
             <Component {...pageProps} />
           </Layout>
-        </FirebaseContextProvider>
+        </UserContextProvider>
       </StylesProvider>
     </ThemeProvider>
   );
