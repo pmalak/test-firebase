@@ -6,10 +6,11 @@ import { Box, Button, Typography } from "@material-ui/core";
 import { Layout } from "@/components/layout";
 import styled from "styled-components";
 import Link from "next/link";
+import { NextPage } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+const Home: NextPage = () => {
   return (
     <>
       <div>
@@ -25,16 +26,18 @@ export default function Home() {
             src="https://crystallize.com/static/logo/crystallize-logo.svg"
             alt=""
           />
-          <Typography variant="h4" gutterBottom >chat</Typography>
+          <Typography variant="h4" gutterBottom>
+            chat
+          </Typography>
 
-          <Link href="/index.page">
+          <Link href="/dashboard">
             <Button>Login</Button>
           </Link>
         </Wrapper>
       </div>
     </>
   );
-}
+};
 
 const Wrapper = styled.div`
   display: flex;
@@ -43,3 +46,5 @@ const Wrapper = styled.div`
   align-items: center;
   height: 100%;
 `;
+
+export default Home;
