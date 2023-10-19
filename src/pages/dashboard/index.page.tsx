@@ -10,7 +10,7 @@ import { addDoc, collection, onSnapshot, query } from "firebase/firestore";
 import { useRouter } from "next/router";
 
 const Dashboard: NextPage = ({}) => {
-  const router = useRouter()
+  const router = useRouter();
 
   const [realChats, setRealChats] = useState<Chat[]>([]);
 
@@ -19,10 +19,7 @@ const Dashboard: NextPage = ({}) => {
   const chastRef = collection(db, "chats");
 
   const createNewChat = async () => {
-    
-    // Create a new chat room
     const newChat: Omit<Chat, "id"> = {
-    
       messages: [],
       lastMessage: null,
       members: [users[0]],
@@ -32,9 +29,8 @@ const Dashboard: NextPage = ({}) => {
 
     try {
       const docRef = await addDoc(chastRef, newChat);
-    
-      router.push(`/chat/${docRef.id}`)
 
+      router.push(`/chat/${docRef.id}`);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -49,10 +45,11 @@ const Dashboard: NextPage = ({}) => {
     const unsubscribe = onSnapshot(queryChats, (querySnapshot) => {
       const chats: Chat[] = [];
       querySnapshot.forEach((doc) => {
-        chats.push({...doc.data(), id: doc.id});
+        const x = {};
+
+        chats.push({ id: doc.id, ...doc.data() } as Chat);
       });
       setRealChats(chats);
-      
     });
 
     return unsubscribe;

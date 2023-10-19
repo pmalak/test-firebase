@@ -11,7 +11,7 @@ type Props = {
 export const ChatHeader = ({ chat: { chatName, avatar } }: Props) => {
   return (
     <Wrapper>
-      <Link href="/dashboard">
+      <Link href="/index.page">
         <IconButton>
           <ArrowBackIcon />
         </IconButton>

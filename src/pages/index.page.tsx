@@ -27,7 +27,7 @@ export default function Home() {
           />
           <Typography variant="h4" gutterBottom >chat</Typography>
 
-          <Link href="/dashboard">
+          <Link href="/index.page">
             <Button>Login</Button>
           </Link>
         </Wrapper>

@@ -22,27 +22,20 @@ const ChatPage: NextPage = ({}) => {
 
   const { db } = useFirebaseContext();
 
-  const chastRef = collection(db, "chats", );
+  const chastRef = collection(db, "chats");
 
   useEffect(() => {
     if (chatId) {
-      
       const queryChats = doc(db, "chats", chatId as string);
       const unsubscribe = onSnapshot(queryChats, (querySnapshot) => {
-        // let chat: Chat = {} as Chat;
-        // querySnapshot.forEach((doc) => {
-        //   chat = { ...(doc.data() as Chat) };
-        // });
-
-        setRealChat(querySnapshot.data());
-        console.log("nalezen ", chat);
+        if (querySnapshot) {
+          setRealChat(querySnapshot.data() as Chat);
+        }
       });
 
       return unsubscribe;
     }
   }, [chatId]);
-
-  console.log("realChat", )
 
   if (chatId && (chat || realChat)) {
     return (

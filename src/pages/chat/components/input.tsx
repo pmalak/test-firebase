@@ -24,20 +24,14 @@ export const Input = ({ setMessages }: Props) => {
   const router = useRouter();
   const { chatId } = router.query;
   const { db } = useFirebaseContext();
-  console.log("chatId be chastRef ", chatId);
-
-
 
   const docS = doc(db, "chats", chatId as string);
 
-
   const [value, setValue] = useState("");
 
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
-
-  console.log("value", value);
 
   const handleSubmit = async () => {
     if (value !== "") {
@@ -53,30 +47,15 @@ export const Input = ({ setMessages }: Props) => {
         lastMessage: newMessage,
       });
 
-      // console.log("rest", resp)
-
-      // setMessages((prevMessages) => [
-      //   ...prevMessages,
-      //   {
-      //     id: "ss",
-      //     author: currentUser,
-      //     content: value,
-      //     createdAt: new Date(),
-      //   },
-      // ]);
-
       setValue("");
     }
   };
 
   useEffect(() => {
-    const keyDownHandler = (event) => {
-      console.log("User pressed: ", event.key);
-
+    const keyDownHandler = (event: KeyboardEvent) => {
       if (event.key === "Enter") {
         event.preventDefault();
 
-        // 👇️ your logic here
         handleSubmit();
       }
     };

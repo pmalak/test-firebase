@@ -4,7 +4,7 @@ import { Firestore, getFirestore } from "firebase/firestore";
 import React from "react";
 import { useContext } from "react";
 
-const FirebaseContext = React.createContext<{db: Firestore} | null>(null);
+const FirebaseContext = React.createContext<{ db: Firestore } | null>(null);
 
 export const useFirebaseContext = () => {
   const context = useContext(FirebaseContext);
@@ -31,13 +31,10 @@ export const FirebaseContextProvider = ({ children }: Props) => {
     appId: "1:975271569866:web:4f77ea3d2fa1a1c24f8733",
   };
 
-  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
 
-  // Initialize Cloud Firestore and get a reference to the service
   const db = getFirestore(app);
   return (
-    // @ts-ignore
     <FirebaseContext.Provider value={{ db }}>
       {children}
     </FirebaseContext.Provider>
