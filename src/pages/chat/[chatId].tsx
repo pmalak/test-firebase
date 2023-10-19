@@ -8,7 +8,7 @@ import { Messages } from "./components/messages";
 import styled from "styled-components";
 import { Input } from "./components/input";
 import { ChatHeader } from "./components/chat-header";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
 import { useFirebaseContext } from "@/components/firebase-context";
 import { Chat } from "@/types";
 
@@ -22,30 +22,34 @@ const ChatPage: NextPage = ({}) => {
 
   const { db } = useFirebaseContext();
 
-  const chastRef = collection(db, "chats");
+  const chastRef = collection(db, "chats", );
 
   useEffect(() => {
-    const queryChats = query(chastRef, where("id", "==", chatId));
-    const unsubscribe = onSnapshot(queryChats, (querySnapshot) => {
-      let chat: Chat = {} as Chat ;
-      querySnapshot.forEach((doc) => {
-        chat = { ...(doc.data() as Chat) };
+    if (chatId) {
+      
+      const queryChats = doc(db, "chats", chatId as string);
+      const unsubscribe = onSnapshot(queryChats, (querySnapshot) => {
+        // let chat: Chat = {} as Chat;
+        // querySnapshot.forEach((doc) => {
+        //   chat = { ...(doc.data() as Chat) };
+        // });
+
+        setRealChat(querySnapshot.data());
+        console.log("nalezen ", chat);
       });
 
-      setRealChat(chat);
-      console.log("nalezen ", chat);
-    });
+      return unsubscribe;
+    }
+  }, [chatId]);
 
-    return unsubscribe;
-  }, []);
+  console.log("realChat", )
 
-  console.log("messages", messages);
-  if (chat || realChat) {
+  if (chatId && (chat || realChat)) {
     return (
       <Wrapper>
         {/* TODO: fix */}
         <ChatHeader chat={chat ?? realChat!} />
-        <Messages messages={messages ?? realChat?.messages} />
+        <Messages messages={realChat?.messages ?? []} />
 
         <Input setMessages={setMessages} />
       </Wrapper>

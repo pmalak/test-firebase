@@ -21,8 +21,8 @@ const Dashboard: NextPage = ({}) => {
   const createNewChat = async () => {
     
     // Create a new chat room
-    const newChat: Chat = {
-      id: `chat${new Date().getTime()}`,
+    const newChat: Omit<Chat, "id"> = {
+    
       messages: [],
       lastMessage: null,
       members: [users[0]],
@@ -33,7 +33,7 @@ const Dashboard: NextPage = ({}) => {
     try {
       const docRef = await addDoc(chastRef, newChat);
     
-      router.push(`/chat/${newChat.id}`)
+      router.push(`/chat/${docRef.id}`)
 
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -49,7 +49,7 @@ const Dashboard: NextPage = ({}) => {
     const unsubscribe = onSnapshot(queryChats, (querySnapshot) => {
       const chats: Chat[] = [];
       querySnapshot.forEach((doc) => {
-        chats.push({...doc.data()});
+        chats.push({...doc.data(), id: doc.id});
       });
       setRealChats(chats);
       

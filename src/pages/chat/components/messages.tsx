@@ -25,7 +25,7 @@ export const Messages = ({ messages }: Props) => {
     <ScrollWrapper>
       <MessageWrapper>
         {messages?.map((message) => (
-          <Message isMyMessage={message.author.id === currentUser.id} key={message.id}>
+          <Message $isMyMessage={message.author.id === currentUser.id} key={message.id}>
             {/* <span>{message.author.name}</span> */}
 
             <Typography>{message.content}</Typography>
@@ -49,10 +49,10 @@ const MessageWrapper = styled.div`
   min-height: 100%;
 `;
 
-const Message = styled.div<{ isMyMessage: boolean }>`
+const Message = styled.div<{ $isMyMessage: boolean }>`
   max-width: 80%;
   border-radius: 20px;
-  background-color: ${(props) => (props.isMyMessage ? "#272a35" : "#373E4E")};
-  justify-self: ${(props) => (props.isMyMessage ? "end" : "start")};
+  background-color: ${(props) => (props.$isMyMessage ? "#272a35" : "#373E4E")};
+  justify-self: ${(props) => (props.$isMyMessage ? "end" : "start")};
   padding: 8px 16px;
 `;

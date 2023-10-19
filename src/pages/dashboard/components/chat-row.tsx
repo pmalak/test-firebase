@@ -30,9 +30,9 @@ export const ChatRow = ({
           {lastMessage?.content}
         </Typography>
 
-        <Typography style={{ fontSize: "13px" }} >
-          {lastMessage?.createdAt.toLocaleDateString()}
-        </Typography>
+        {/* <Typography style={{ fontSize: "13px" }} >
+          {lastMessage?.createdAt?.toLocaleDateString()}
+        </Typography> */}
       </RowWrapper>
     </Link>
   );

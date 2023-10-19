@@ -4,12 +4,33 @@ import styled from "styled-components";
 import SendIcon from "@material-ui/icons/Send";
 import { Message } from "@/types";
 import { currentUser } from "@/mocks";
+import {
+  addDoc,
+  collection,
+  query,
+  where,
+  updateDoc,
+  doc,
+  arrayUnion,
+} from "firebase/firestore";
+import { useFirebaseContext } from "@/components/firebase-context";
+import { useRouter } from "next/router";
 
 type Props = {
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
 };
 
 export const Input = ({ setMessages }: Props) => {
+  const router = useRouter();
+  const { chatId } = router.query;
+  const { db } = useFirebaseContext();
+  console.log("chatId be chastRef ", chatId);
+
+
+
+  const docS = doc(db, "chats", chatId as string);
+
+
   const [value, setValue] = useState("");
 
   const handleChange = (event) => {
@@ -18,17 +39,31 @@ export const Input = ({ setMessages }: Props) => {
 
   console.log("value", value);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (value !== "") {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          id: "ss",
-          author: currentUser,
-          content: value,
-          createdAt: new Date(),
-        },
-      ]);
+      const newMessage = {
+        id: `${new Date()} ${value}`,
+        author: currentUser,
+        content: value,
+        createdAt: new Date(),
+      };
+
+      const resp = await updateDoc(docS, {
+        messages: arrayUnion(newMessage),
+        lastMessage: newMessage,
+      });
+
+      // console.log("rest", resp)
+
+      // setMessages((prevMessages) => [
+      //   ...prevMessages,
+      //   {
+      //     id: "ss",
+      //     author: currentUser,
+      //     content: value,
+      //     createdAt: new Date(),
+      //   },
+      // ]);
 
       setValue("");
     }
