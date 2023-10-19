@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
 import { Chats } from "./components/chats";
-import { chatsMock, users } from "@/mocks";
-import { Layout } from "@/components/layout";
-import { Button, Typography } from "@material-ui/core";
+import { users } from "@/mocks";
+import { Button } from "@material-ui/core";
 import { Chat } from "@/types";
 import { useFirebaseContext } from "@/components/firebase-context";
-import { addDoc, collection, onSnapshot, query } from "firebase/firestore";
+import {
+  FieldPath,
+  addDoc,
+  collection,
+  documentId,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import { useRouter } from "next/router";
+import { DashboardHeader } from "./components/header";
 
 const Dashboard: NextPage = ({}) => {
   const router = useRouter();
@@ -41,7 +49,14 @@ const Dashboard: NextPage = ({}) => {
   };
 
   useEffect(() => {
-    const queryChats = query(chastRef);
+    const queryChats = query(
+      collection(db, "chats"),
+      where(documentId(), "in", [
+        "9r2d6rvu8Kyt03wTml2D",
+        "Y5y4lw5AjGHhLWuZzPnK",
+      ])
+    );
+    // const queryChats = query(chastRef);
     const unsubscribe = onSnapshot(queryChats, (querySnapshot) => {
       const chats: Chat[] = [];
       querySnapshot.forEach((doc) => {
@@ -57,11 +72,9 @@ const Dashboard: NextPage = ({}) => {
 
   return (
     <>
-      <Typography variant="h4" gutterBottom>
-        Header
-      </Typography>
+      <DashboardHeader />
 
-      <Chats chats={[...chatsMock, ...realChats]} />
+      <Chats chats={realChats} />
 
       <Button onClick={handleClick}>new</Button>
     </>

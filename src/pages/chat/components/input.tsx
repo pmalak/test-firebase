@@ -17,10 +17,10 @@ import { useFirebaseContext } from "@/components/firebase-context";
 import { useRouter } from "next/router";
 
 type Props = {
-  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+  // setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
 };
 
-export const Input = ({ setMessages }: Props) => {
+export const Input = ({  }: Props) => {
   const router = useRouter();
   const { chatId } = router.query;
   const { db } = useFirebaseContext();

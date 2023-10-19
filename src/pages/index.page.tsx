@@ -1,16 +1,41 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
-import { Box, Button, Typography } from "@material-ui/core";
-import { Layout } from "@/components/layout";
+// import Image from "next/image";
+
+import { Button, Typography } from "@material-ui/core";
+
 import styled from "styled-components";
 import Link from "next/link";
 import { NextPage } from "next";
+import { useEffect } from "react";
 
-const inter = Inter({ subsets: ["latin"] });
+import {
+  collection,
+  Firestore,
+  getDocs,
+  Query,
+  QueryDocumentSnapshot,
+  QuerySnapshot,
+} from "firebase/firestore";
+import { User } from "@/types";
+import { useFirebaseContext } from "@/components/firebase-context";
 
 const Home: NextPage = () => {
+  const { db } = useFirebaseContext();
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const q = collection(db, "users");
+
+      const querySnapshot = await getDocs(q);
+      const docs = querySnapshot.docs;
+      const users = docs.map((doc) => doc.data());
+
+      console.log("users", users);
+    };
+
+    getUsers();
+  }, []);
+
   return (
     <>
       <div>

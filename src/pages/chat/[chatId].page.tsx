@@ -16,9 +16,9 @@ const ChatPage: NextPage = ({}) => {
   const router = useRouter();
   const { chatId } = router.query;
 
-  const chat = chatsMock.find((chat) => chat.id === chatId);
+
   const [realChat, setRealChat] = useState<Chat | null>(null);
-  const [messages, setMessages] = useState(chat?.messages ?? []);
+
 
   const { db } = useFirebaseContext();
 
@@ -37,14 +37,14 @@ const ChatPage: NextPage = ({}) => {
     }
   }, [chatId]);
 
-  if (chatId && (chat || realChat)) {
+  if (chatId &&  realChat) {
     return (
       <Wrapper>
         {/* TODO: fix */}
-        <ChatHeader chat={chat ?? realChat!} />
+        <ChatHeader chat={realChat} />
         <Messages messages={realChat?.messages ?? []} />
 
-        <Input setMessages={setMessages} />
+        <Input  />
       </Wrapper>
     );
   }
