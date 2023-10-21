@@ -1,5 +1,4 @@
 import { useUserContext } from "@/components/user-context";
-import { currentUser } from "@/mocks";
 import { Avatar } from "@material-ui/core";
 import styled from "styled-components";
 

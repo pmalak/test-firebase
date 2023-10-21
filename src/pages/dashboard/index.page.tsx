@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
 import { Chats } from "./components/chats";
-import { users } from "@/mocks";
-import { Button } from "@material-ui/core";
+
 import { Chat } from "@/types";
 import {
-  FieldPath,
-  addDoc,
+  
   collection,
   documentId,
   onSnapshot,
@@ -27,7 +25,7 @@ const Dashboard: NextPage = ({}) => {
   const [realChats, setRealChats] = useState<Chat[]>([]);
 
   useEffect(() => {
-    console.log("currentUser?.chats", currentUser?.chats)
+    console.log("currentUser?.chats", currentUser?.chats);
     if (!!currentUser?.chats.length) {
       const queryChats = query(
         collection(db, "chats"),

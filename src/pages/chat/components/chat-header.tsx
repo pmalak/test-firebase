@@ -31,6 +31,7 @@ export const ChatHeader = ({ chat: { chatName, avatar, members } }: Props) => {
         }}
       />
 
+
       <Typography>{chatMembers[0].name}</Typography>
     </Wrapper>
   );

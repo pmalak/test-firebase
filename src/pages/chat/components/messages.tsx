@@ -1,7 +1,6 @@
-import { currentUser } from "@/mocks";
+import { useUserContext } from "@/components/user-context";
 import { Chat } from "@/types";
 import { Box, Typography } from "@material-ui/core";
-import { mock } from "node:test";
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 
@@ -11,6 +10,7 @@ type Props = {
 
 export const Messages = ({ messages }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
+  const { currentUser } = useUserContext();
 
   useEffect(() => {
     if (messages.length) {
@@ -24,13 +24,23 @@ export const Messages = ({ messages }: Props) => {
   return (
     <ScrollWrapper>
       <MessageWrapper>
-        {messages?.map((message) => (
-          <Message $isMyMessage={message.author.id === currentUser.id} key={message.id}>
-            {/* <span>{message.author.name}</span> */}
+        {messages?.map((message) => {
+          console.log(
+            "message.author.id === currentUser.id",
+            message.author.id === currentUser?.id
+          );
 
-            <Typography>{message.content}</Typography>
-          </Message>
-        ))}
+          return (
+            <Message
+              $isMyMessage={message.author.id === currentUser?.id}
+              key={message.id}
+            >
+              {/* <span>{message.author.name}</span> */}
+
+              <Typography>{message.content}</Typography>
+            </Message>
+          );
+        })}
         <div ref={ref} />
       </MessageWrapper>
     </ScrollWrapper>
