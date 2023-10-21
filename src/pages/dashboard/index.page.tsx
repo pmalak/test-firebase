@@ -18,67 +18,43 @@ import { DashboardHeader } from "./components/header";
 import db from "@/utils/firebase";
 
 import { FavoriteContacts } from "./components/favorite-contact";
+import { useUserContext } from "@/components/user-context";
 
 const Dashboard: NextPage = ({}) => {
   const router = useRouter();
-  
+  const { currentUser } = useUserContext();
+
   const [realChats, setRealChats] = useState<Chat[]>([]);
 
-  const chastRef = collection(db, "chats");
-
-  const createNewChat = async () => {
-    const newChat: Omit<Chat, "id"> = {
-      messages: [],
-      lastMessage: null,
-      members: [users[0]],
-      chatName: "Dalsi test",
-      avatar: users[1].avatarUrl,
-    };
-
-    try {
-      const docRef = await addDoc(chastRef, newChat);
-
-      router.push(`/chat/${docRef.id}`);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  };
-
-  const handleClick = () => {
-    createNewChat();
-  };
-
   useEffect(() => {
-    const queryChats = query(
-      collection(db, "chats"),
-      where(documentId(), "in", [
-        "9r2d6rvu8Kyt03wTml2D",
-        "Y5y4lw5AjGHhLWuZzPnK",
-      ])
-    );
+    console.log("currentUser?.chats", currentUser?.chats)
+    if (!!currentUser?.chats.length) {
+      const queryChats = query(
+        collection(db, "chats"),
+        where(documentId(), "in", currentUser?.chats ?? [""])
+      );
 
-    const unsubscribe = onSnapshot(queryChats, (querySnapshot) => {
-      const chats: Chat[] = [];
-      querySnapshot.forEach((doc) => {
-        const x = {};
+      const unsubscribe = onSnapshot(queryChats, (querySnapshot) => {
+        const chats: Chat[] = [];
+        querySnapshot.forEach((doc) => {
+          const x = {};
 
-        chats.push({ id: doc.id, ...doc.data() } as Chat);
+          chats.push({ id: doc.id, ...doc.data() } as Chat);
+        });
+        setRealChats(chats);
       });
-      setRealChats(chats);
-    });
 
-    return unsubscribe;
-  }, []);
+      return unsubscribe;
+    }
+  }, [currentUser?.chats]);
 
   return (
     <>
       <DashboardHeader />
 
-      <FavoriteContacts />
-      
-      <Chats chats={realChats} />
+      <FavoriteContacts chats={realChats} />
 
-      <Button onClick={handleClick}>new</Button>
+      <Chats chats={realChats} />
     </>
   );
 };

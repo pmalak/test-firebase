@@ -1,11 +1,13 @@
-import { User } from "@/types";
+import { Chat, User } from "@/types";
 import db from "@/utils/firebase";
 import { initializeApp } from "firebase/app";
 import {
   Firestore,
   collection,
+  doc,
   getDocs,
   getFirestore,
+  onSnapshot,
 } from "firebase/firestore";
 import { useRouter } from "next/router";
 
@@ -61,6 +63,26 @@ export const UserContextProvider = ({ children }: Props) => {
 
     getUsers();
   }, []);
+
+  useEffect(() => {
+    if (currentUser?.id) {
+      const queryUser = doc(db, "users", currentUser?.id);
+      const unsubscribe = onSnapshot(queryUser, (querySnapshot) => {
+        if (querySnapshot) {
+          console.log(
+            "setCurrenttUser(querySnapshot.data() as User);",
+            querySnapshot.data()
+          );
+          setCurrenttUser({
+            id: currentUser?.id,
+            ...querySnapshot.data(),
+          } as User);
+        }
+      });
+
+      return unsubscribe;
+    }
+  }, [currentUser?.id]);
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("currentUserID");

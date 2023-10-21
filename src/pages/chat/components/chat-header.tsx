@@ -4,11 +4,15 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import Link from "next/link";
 import { Chat } from "@/types";
 import styled from "styled-components";
+import { useUserContext } from "@/components/user-context";
+import { useChatMembersForHeader } from "@/utils/helpers";
 type Props = {
   chat: Chat;
 };
 
-export const ChatHeader = ({ chat: { chatName, avatar } }: Props) => {
+export const ChatHeader = ({ chat: { chatName, avatar, members } }: Props) => {
+  const chatMembers = useChatMembersForHeader(members);
+
   return (
     <Wrapper>
       <Link href="/dashboard">
@@ -19,7 +23,7 @@ export const ChatHeader = ({ chat: { chatName, avatar } }: Props) => {
 
       <Avatar
         alt={chatName}
-        src={avatar}
+        src={chatMembers[0].avatarUrl}
         style={{
           height: "36px",
           width: "36px",
@@ -27,7 +31,7 @@ export const ChatHeader = ({ chat: { chatName, avatar } }: Props) => {
         }}
       />
 
-      <Typography>{chatName}</Typography>
+      <Typography>{chatMembers[0].name}</Typography>
     </Wrapper>
   );
 };

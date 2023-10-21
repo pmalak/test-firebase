@@ -1,4 +1,5 @@
 import { Chat } from "@/types";
+import { useChatMembersForHeader } from "@/utils/helpers";
 import { Avatar, Box, Typography } from "@material-ui/core";
 import Link from "next/link";
 import React from "react";
@@ -8,16 +9,16 @@ type Props = {
   chat: Chat;
 };
 
-export const ChatRow = ({
-  chat: { id, chatName, lastMessage, avatar },
-}: Props) => {
+export const ChatRow = ({ chat: { id, lastMessage, members } }: Props) => {
+  const chatMembers = useChatMembersForHeader(members);
+
   return (
     <Link href={`/chat/${id}`}>
       <RowWrapper>
         <Box height="44px" className="avatarWrapper">
           <Avatar
-            alt={chatName}
-            src={avatar}
+            alt={chatMembers[0].name}
+            src={chatMembers[0].avatarUrl}
             style={{
               boxShadow: "4px 4px 24px 0px rgba(0, 0, 0, 0.45)",
               height: "48px",
@@ -25,7 +26,9 @@ export const ChatRow = ({
             }}
           />
         </Box>
-        <Typography style={{ fontSize: "15px" }}>{chatName}</Typography>
+        <Typography style={{ fontSize: "15px" }}>
+          {chatMembers[0].name}
+        </Typography>
         <Typography style={{ fontSize: "13px" }} noWrap className="message">
           {lastMessage?.content}
         </Typography>
@@ -58,6 +61,6 @@ const RowWrapper = styled.div`
   }
 
   .message {
-    grid-column: span 2
+    grid-column: span 2;
   }
 `;

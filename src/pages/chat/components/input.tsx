@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SendIcon from "@material-ui/icons/Send";
 import { Message } from "@/types";
-import { currentUser } from "@/mocks";
+
 import {
   addDoc,
   collection,
@@ -15,6 +15,7 @@ import {
 } from "firebase/firestore";
 import { useRouter } from "next/router";
 import db from "@/utils/firebase";
+import { useUserContext } from "@/components/user-context";
 
 type Props = {
   // setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
@@ -23,7 +24,7 @@ type Props = {
 export const Input = ({}: Props) => {
   const router = useRouter();
   const { chatId } = router.query;
-
+  const { currentUser } = useUserContext();
   const docS = doc(db, "chats", chatId as string);
 
   const [value, setValue] = useState("");
@@ -31,7 +32,7 @@ export const Input = ({}: Props) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
-
+  console.log("currentUser", currentUser);
   const handleSubmit = async () => {
     if (value !== "") {
       const newMessage = {

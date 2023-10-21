@@ -18,6 +18,6 @@ export type Chat = {
   chatName: string;
   messages: Message[];
   lastMessage: Message | null;
-  members: User[];
+  members: string[];
   avatar: string;
 };

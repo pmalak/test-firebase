@@ -28,11 +28,10 @@ const Home: NextPage = () => {
   const { setCurrenttUser, allUsers } = useUserContext();
 
   const hanleClick = (id: string) => {
-    const selectedUser = allUsers.find((user) => user.id === id)!;
+    const selectedUser = allUsers!.find((user) => user.id === id)!;
 
     setCurrenttUser(selectedUser);
     localStorage.setItem("currentUserID", selectedUser.id.toString()); // Local storage stores data as strings, so convert the ID to a string
-    
 
     router.push("/dashboard");
   };
@@ -56,9 +55,6 @@ const Home: NextPage = () => {
         </Typography>
 
         <Typography gutterBottom>login as</Typography>
-        {/* <Link href="/dashboard">
-          <Button>Login</Button>
-        </Link> */}
 
         <AvatarWrapper>
           {allUsers?.map(({ name, avatarUrl, id }) => (
