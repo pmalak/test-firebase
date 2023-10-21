@@ -15,7 +15,6 @@ export const Messages = ({ messages }: Props) => {
   useEffect(() => {
     if (messages.length) {
       ref.current?.scrollIntoView({
-        
         block: "end",
       });
     }
@@ -24,23 +23,14 @@ export const Messages = ({ messages }: Props) => {
   return (
     <ScrollWrapper>
       <MessageWrapper>
-        {messages?.map((message) => {
-          console.log(
-            "message.author.id === currentUser.id",
-            message.author.id === currentUser?.id
-          );
-
-          return (
-            <Message
-              $isMyMessage={message.author.id === currentUser?.id}
-              key={message.id}
-            >
-              {/* <span>{message.author.name}</span> */}
-
-              <Typography>{message.content}</Typography>
-            </Message>
-          );
-        })}
+        {messages?.map((message) => (
+          <Message
+            $isMyMessage={message.author.id === currentUser?.id}
+            key={message.id}
+          >
+            <Typography>{message.content}</Typography>
+          </Message>
+        ))}
         <div ref={ref} />
       </MessageWrapper>
     </ScrollWrapper>

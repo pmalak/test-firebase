@@ -1,6 +1,4 @@
-import React, { FC, ReactNode } from "react";
-
-import { Box } from "@material-ui/core";
+import React, { FC } from "react";
 import { COLORS } from "@/constants/colors";
 import styled from "styled-components";
 
@@ -17,7 +15,6 @@ export const Layout: FC<Props> = ({ children }) => {
 
 const MainLayout = styled.div`
   display: grid;
-
   place-items: center;
   height: 100vh;
 `;

@@ -6,7 +6,7 @@ import { Messages } from "./components/messages";
 import styled from "styled-components";
 import { Input } from "./components/input";
 import { ChatHeader } from "./components/chat-header";
-import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { Chat } from "@/types";
 import db from "@/utils/firebase";
 
@@ -15,8 +15,6 @@ const ChatPage: NextPage = ({}) => {
   const { chatId } = router.query;
 
   const [realChat, setRealChat] = useState<Chat | null>(null);
-
-  const chastRef = collection(db, "chats");
 
   useEffect(() => {
     if (chatId) {
@@ -34,7 +32,6 @@ const ChatPage: NextPage = ({}) => {
   if (chatId && realChat) {
     return (
       <Wrapper>
-        {/* TODO: fix */}
         <ChatHeader chat={realChat} />
         <Messages messages={realChat?.messages ?? []} />
 

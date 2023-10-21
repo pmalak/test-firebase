@@ -4,14 +4,12 @@ import { Chats } from "./components/chats";
 
 import { Chat } from "@/types";
 import {
-  
   collection,
   documentId,
   onSnapshot,
   query,
   where,
 } from "firebase/firestore";
-import { useRouter } from "next/router";
 import { DashboardHeader } from "./components/header";
 import db from "@/utils/firebase";
 
@@ -19,13 +17,11 @@ import { FavoriteContacts } from "./components/favorite-contact";
 import { useUserContext } from "@/components/user-context";
 
 const Dashboard: NextPage = ({}) => {
-  const router = useRouter();
   const { currentUser } = useUserContext();
 
   const [realChats, setRealChats] = useState<Chat[]>([]);
 
   useEffect(() => {
-    
     if (!!currentUser?.chats.length) {
       const queryChats = query(
         collection(db, "chats"),

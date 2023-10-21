@@ -22,21 +22,13 @@ export const FavoriteContacts = ({ chats }: Props) => {
   const { push } = useRouter();
   const { allUsers, currentUser } = useUserContext();
 
-  const contacts = [
-    ...(allUsers ?? []),
-    //   , ...(allUsers ?? [])
-  ];
-
   const chastRef = collection(db, "chats");
 
-  const createNewChatik = async (contact: User) => {
+  const createNewChat = async (contact: User) => {
     const newChat: Omit<Chat, "id"> = {
       messages: [],
       lastMessage: null,
-      members: [
-        currentUser!.id,
-        contact.id === currentUser?.id ? `${currentUser?.id}self` : contact.id,
-      ],
+      members: [currentUser!.id, contact.id],
       chatName: contact.name,
       avatar: contact.avatarUrl,
     };
@@ -44,12 +36,11 @@ export const FavoriteContacts = ({ chats }: Props) => {
     try {
       const docRef = await addDoc(chastRef, newChat);
 
-      const userRer = doc(db, "users", currentUser!.id);
-      await updateDoc(userRer, {
+      await updateDoc(doc(db, "users", currentUser!.id), {
         chats: arrayUnion(docRef.id),
       });
-      const counterRer = doc(db, "users", contact.id);
-      await updateDoc(counterRer, {
+
+      await updateDoc(doc(db, "users", contact.id), {
         chats: arrayUnion(docRef.id),
       });
 
@@ -61,16 +52,19 @@ export const FavoriteContacts = ({ chats }: Props) => {
 
   const handleClick = (contact: User) => {
     const existingChat = chats.find((chat) =>
-      chat.members
-        .filter((memberId) => memberId !== currentUser?.id)
-        .includes(contact.id)
+      chat.members.includes(contact.id)
     );
+
+    if (contact.id === currentUser?.id) {
+      console.log("self-chat not implemented");
+      return;
+    }
 
     if (!!existingChat) {
       return push(`chat/${existingChat.id}`);
     }
 
-    createNewChatik(contact);
+    createNewChat(contact);
   };
 
   return (
@@ -81,7 +75,7 @@ export const FavoriteContacts = ({ chats }: Props) => {
 
       <OverflowWrapper>
         <FavoritesWrapper>
-          {contacts?.map((contact) => (
+          {allUsers?.map((contact) => (
             <ContactItem
               key={contact.id}
               contact={contact}

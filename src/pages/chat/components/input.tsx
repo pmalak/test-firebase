@@ -1,31 +1,17 @@
-import { Box, IconButton, TextField } from "@material-ui/core";
+import { IconButton, TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SendIcon from "@material-ui/icons/Send";
-import { Message } from "@/types";
 
-import {
-  addDoc,
-  collection,
-  query,
-  where,
-  updateDoc,
-  doc,
-  arrayUnion,
-} from "firebase/firestore";
+import { updateDoc, doc, arrayUnion } from "firebase/firestore";
 import { useRouter } from "next/router";
 import db from "@/utils/firebase";
 import { useUserContext } from "@/components/user-context";
 
-type Props = {
-  // setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
-};
-
-export const Input = ({}: Props) => {
+export const Input = () => {
   const router = useRouter();
   const { chatId } = router.query;
   const { currentUser } = useUserContext();
-  const docS = doc(db, "chats", chatId as string);
 
   const [value, setValue] = useState("");
 
@@ -33,7 +19,7 @@ export const Input = ({}: Props) => {
     setValue(event.target.value);
   };
 
-  const handleSubmit = async () => {
+  const submitMessage = async () => {
     if (value !== "") {
       const newMessage = {
         id: `${new Date()} ${value}`,
@@ -42,7 +28,8 @@ export const Input = ({}: Props) => {
         createdAt: new Date(),
       };
 
-      const resp = await updateDoc(docS, {
+      const selectedDoc = doc(db, "chats", chatId as string);
+      await updateDoc(selectedDoc, {
         messages: arrayUnion(newMessage),
         lastMessage: newMessage,
       });
@@ -56,7 +43,7 @@ export const Input = ({}: Props) => {
       if (event.key === "Enter") {
         event.preventDefault();
 
-        handleSubmit();
+        submitMessage();
       }
     };
 
@@ -65,7 +52,7 @@ export const Input = ({}: Props) => {
     return () => {
       document.removeEventListener("keydown", keyDownHandler);
     };
-  }, [handleSubmit]);
+  }, [submitMessage]);
 
   return (
     <InputRow>
@@ -78,7 +65,7 @@ export const Input = ({}: Props) => {
         variant="outlined"
       />
 
-      <IconButton aria-label="delete" onClick={handleSubmit}>
+      <IconButton aria-label="delete" onClick={submitMessage}>
         <SendIcon />
       </IconButton>
     </InputRow>

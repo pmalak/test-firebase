@@ -7,10 +7,7 @@ export const DashboardHeader = () => {
 
   return (
     <Wrapper>
-      <img
-        src="https://crystallize.com/static/logo/crystallize-logo.svg"
-        alt=""
-      />
+      <img src="https://crystallize.com/static/logo/crystallize-logo.svg" />
 
       <Avatar
         src={currentUser?.avatarUrl ?? ""}

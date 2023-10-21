@@ -1,24 +1,11 @@
 import Head from "next/head";
-// import Image from "next/image";
 
-import { Avatar, Button, Typography } from "@material-ui/core";
+import { Avatar, Typography } from "@material-ui/core";
 
 import styled from "styled-components";
-import Link from "next/link";
+
 import { NextPage } from "next";
-import { useEffect, useState } from "react";
 
-import {
-  collection,
-  Firestore,
-  getDocs,
-  Query,
-  QueryDocumentSnapshot,
-  QuerySnapshot,
-} from "firebase/firestore";
-import { User } from "@/types";
-
-import db from "@/utils/firebase";
 import { useUserContext } from "@/components/user-context";
 import { useRouter } from "next/router";
 
@@ -31,7 +18,7 @@ const Home: NextPage = () => {
     const selectedUser = allUsers!.find((user) => user.id === id)!;
 
     setCurrenttUser(selectedUser);
-    localStorage.setItem("currentUserID", selectedUser.id.toString()); // Local storage stores data as strings, so convert the ID to a string
+    localStorage.setItem("currentUserID", selectedUser.id.toString());
 
     router.push("/dashboard");
   };
@@ -86,7 +73,7 @@ const Wrapper = styled.div`
 
 const AvatarWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: repeat(4, auto);
   grid-gap: 16px;
   height: 64px;
 `;

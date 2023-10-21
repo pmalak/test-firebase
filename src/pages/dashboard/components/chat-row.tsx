@@ -15,7 +15,7 @@ export const ChatRow = ({ chat: { id, lastMessage, members } }: Props) => {
   return (
     <Link href={`/chat/${id}`}>
       <RowWrapper>
-        <Box height="44px" className="avatarWrapper">
+        <div className="avatarWrapper">
           <Avatar
             alt={chatMembers[0].name}
             src={chatMembers[0].avatarUrl}
@@ -25,7 +25,7 @@ export const ChatRow = ({ chat: { id, lastMessage, members } }: Props) => {
               width: "49px",
             }}
           />
-        </Box>
+        </div>
         <Typography style={{ fontSize: "15px" }}>
           {chatMembers[0].name}
         </Typography>

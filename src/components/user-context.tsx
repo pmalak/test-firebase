@@ -1,14 +1,7 @@
-import { Chat, User } from "@/types";
+import { User } from "@/types";
 import db from "@/utils/firebase";
-import { initializeApp } from "firebase/app";
-import {
-  Firestore,
-  collection,
-  doc,
-  getDocs,
-  getFirestore,
-  onSnapshot,
-} from "firebase/firestore";
+
+import { collection, doc, getDocs, onSnapshot } from "firebase/firestore";
 import { useRouter } from "next/router";
 
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -69,10 +62,6 @@ export const UserContextProvider = ({ children }: Props) => {
       const queryUser = doc(db, "users", currentUser?.id);
       const unsubscribe = onSnapshot(queryUser, (querySnapshot) => {
         if (querySnapshot) {
-          console.log(
-            "setCurrenttUser(querySnapshot.data() as User);",
-            querySnapshot.data()
-          );
           setCurrenttUser({
             id: currentUser?.id,
             ...querySnapshot.data(),
