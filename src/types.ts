@@ -1,27 +1,23 @@
-export type User  = {
+export type User = {
   id: string;
   name: string;
-  email: string
-  avatarUrl: string
-
-}
-
-
+  avatarUrl: string;
+  contacts: string[];
+  chats: string[];
+};
 
 export type Message = {
-  id: string
-  content: string
-  author: User
-  createdAt: Date
-}
+  id: string;
+  content: string;
+  author: User;
+  createdAt: Date;
+};
 
 export type Chat = {
-  id:string
+  id: string;
   chatName: string;
-  messages: Message[]
-  lastMessage: Message | null
-  members: User[]
+  messages: Message[];
+  lastMessage: Message | null;
+  members: User[];
   avatar: string;
-}
-
-
+};

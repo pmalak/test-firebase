@@ -24,35 +24,15 @@ import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const [users, setUsers] = useState<User[]>();
-  const { setUserContext } = useUserContext();
 
-  useEffect(() => {
-    const getUsers = async () => {
-      const q = collection(db, "users");
-
-      const querySnapshot = await getDocs(q);
-      const docs = querySnapshot.docs;
-      const data = docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-
-      if (data) {
-        console.log(data);
-        setUsers(data as User[]);
-      }
-    };
-
-    getUsers();
-  }, []);
+  const { setCurrenttUser, allUsers } = useUserContext();
 
   const hanleClick = (id: string) => {
-    setUserContext({
-      //@ts-ignore
-      currentUser: users.find((user) => user.id === id),
-      contacts: users!.filter((user) => user.id !== id),
-    });
+    const selectedUser = allUsers.find((user) => user.id === id)!;
+
+    setCurrenttUser(selectedUser);
+    localStorage.setItem("currentUserID", selectedUser.id.toString()); // Local storage stores data as strings, so convert the ID to a string
+    
 
     router.push("/dashboard");
   };
@@ -81,7 +61,7 @@ const Home: NextPage = () => {
         </Link> */}
 
         <AvatarWrapper>
-          {users?.map(({ name, avatarUrl, id }) => (
+          {allUsers?.map(({ name, avatarUrl, id }) => (
             <AvatarHug onClick={() => hanleClick(id)} key={id}>
               <Avatar
                 alt={name}

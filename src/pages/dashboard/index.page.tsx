@@ -16,14 +16,13 @@ import {
 import { useRouter } from "next/router";
 import { DashboardHeader } from "./components/header";
 import db from "@/utils/firebase";
-import { useUserContext } from "@/components/user-context";
+
+import { FavoriteContacts } from "./components/favorite-contact";
 
 const Dashboard: NextPage = ({}) => {
   const router = useRouter();
-  const {userContext} = useUserContext()
-  const [realChats, setRealChats] = useState<Chat[]>([]);
-
   
+  const [realChats, setRealChats] = useState<Chat[]>([]);
 
   const chastRef = collection(db, "chats");
 
@@ -57,7 +56,7 @@ const Dashboard: NextPage = ({}) => {
         "Y5y4lw5AjGHhLWuZzPnK",
       ])
     );
-    // const queryChats = query(chastRef);
+
     const unsubscribe = onSnapshot(queryChats, (querySnapshot) => {
       const chats: Chat[] = [];
       querySnapshot.forEach((doc) => {
@@ -75,6 +74,8 @@ const Dashboard: NextPage = ({}) => {
     <>
       <DashboardHeader />
 
+      <FavoriteContacts />
+      
       <Chats chats={realChats} />
 
       <Button onClick={handleClick}>new</Button>

@@ -7,25 +7,23 @@ import {
   getDocs,
   getFirestore,
 } from "firebase/firestore";
+import { useRouter } from "next/router";
 
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useContext } from "react";
 
-
 type UseContext = {
   currentUser: User;
   contacts: User[];
-  
-}
-
+};
 
 type Context = {
-  userContext: UseContext;
-  setUserContext: Dispatch<SetStateAction<UseContext>>
-}
+  currentUser: User | undefined;
+  allUsers: User[] | undefined;
+  setCurrenttUser: Dispatch<SetStateAction<User | undefined>>;
+};
 
-const UserContext = React.createContext<Context
- | null>(null);
+const UserContext = React.createContext<Context | null>(null);
 
 export const useUserContext = () => {
   const context = useContext(UserContext);
@@ -41,15 +39,49 @@ type Props = {
 };
 
 export const UserContextProvider = ({ children }: Props) => {
-  const [userContext, setUserContext] = useState<UseContext>({} as UseContext);
+  const { pathname, push } = useRouter();
+  const [currentUser, setCurrenttUser] = useState<User | undefined>(undefined);
+  const [allUsers, setAllUsers] = useState<User[]>();
 
+  useEffect(() => {
+    const getUsers = async () => {
+      const q = collection(db, "users");
 
+      const querySnapshot = await getDocs(q);
+      const docs = querySnapshot.docs;
+      const data = docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+
+      if (data) {
+        setAllUsers(data as User[]);
+      }
+    };
+
+    getUsers();
+  }, []);
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("currentUserID");
+
+    if (!currentUser && allUsers && storedUserId && pathname !== "/") {
+      const selectedUser = allUsers.find((user) => user.id === storedUserId)!;
+
+      setCurrenttUser(selectedUser);
+    }
+
+    if (!currentUser && allUsers && !storedUserId && pathname !== "/") {
+      push("/");
+    }
+  }, [currentUser, allUsers, pathname]);
 
   return (
     <UserContext.Provider
       value={{
-        userContext,
-        setUserContext,
+        currentUser,
+        allUsers,
+        setCurrenttUser,
       }}
     >
       {children}

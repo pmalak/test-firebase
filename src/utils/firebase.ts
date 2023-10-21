@@ -1,6 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
+
+// TODO: move out
 const firebaseConfig = {
     apiKey: "AIzaSyDtj6iqztI1iNR5A-e1EZZyo84RUBivxD8",
     authDomain: "crystallize-chat-by-pm.firebaseapp.com",

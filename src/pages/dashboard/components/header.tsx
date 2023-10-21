@@ -4,7 +4,7 @@ import { Avatar } from "@material-ui/core";
 import styled from "styled-components";
 
 export const DashboardHeader = () => {
-  const { userContext } = useUserContext();
+  const { currentUser } = useUserContext();
 
   return (
     <Wrapper>
@@ -14,7 +14,7 @@ export const DashboardHeader = () => {
       />
 
       <Avatar
-        src={userContext.currentUser?.avatarUrl ?? ""}
+        src={currentUser?.avatarUrl ?? ""}
         style={{
           height: "32px",
           width: "32px",
