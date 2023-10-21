@@ -25,7 +25,7 @@ const Dashboard: NextPage = ({}) => {
   const [realChats, setRealChats] = useState<Chat[]>([]);
 
   useEffect(() => {
-    console.log("currentUser?.chats", currentUser?.chats);
+    
     if (!!currentUser?.chats.length) {
       const queryChats = query(
         collection(db, "chats"),

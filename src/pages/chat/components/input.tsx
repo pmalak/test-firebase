@@ -32,7 +32,7 @@ export const Input = ({}: Props) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
-  console.log("currentUser", currentUser);
+
   const handleSubmit = async () => {
     if (value !== "") {
       const newMessage = {

@@ -30,12 +30,13 @@ export const FavoriteContacts = ({ chats }: Props) => {
   const chastRef = collection(db, "chats");
 
   const createNewChatik = async (contact: User) => {
-    console.error("createNewChat", contact);
-    console.error("currentUser", currentUser);
     const newChat: Omit<Chat, "id"> = {
       messages: [],
       lastMessage: null,
-      members: [contact.id, currentUser!.id],
+      members: [
+        currentUser!.id,
+        contact.id === currentUser?.id ? `${currentUser?.id}self` : contact.id,
+      ],
       chatName: contact.name,
       avatar: contact.avatarUrl,
     };
@@ -59,8 +60,6 @@ export const FavoriteContacts = ({ chats }: Props) => {
   };
 
   const handleClick = (contact: User) => {
-    console.log("contact id", contact.id);
-
     const existingChat = chats.find((chat) =>
       chat.members
         .filter((memberId) => memberId !== currentUser?.id)

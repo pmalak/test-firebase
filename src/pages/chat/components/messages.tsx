@@ -15,7 +15,7 @@ export const Messages = ({ messages }: Props) => {
   useEffect(() => {
     if (messages.length) {
       ref.current?.scrollIntoView({
-        behavior: "smooth",
+        
         block: "end",
       });
     }
