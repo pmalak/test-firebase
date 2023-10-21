@@ -23,7 +23,7 @@ import { useUserContext } from "@/components/user-context";
 import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [users, setUsers] = useState<User[]>();
   const { setUserContext } = useUserContext();
 
@@ -33,14 +33,14 @@ const Home: NextPage = () => {
 
       const querySnapshot = await getDocs(q);
       const docs = querySnapshot.docs;
-      const data: User[] = docs.map((doc) => ({
-        id: doc.id,
+      const data = docs.map((doc) => ({
         ...doc.data(),
+        id: doc.id,
       }));
 
       if (data) {
         console.log(data);
-        setUsers(data);
+        setUsers(data as User[]);
       }
     };
 
@@ -49,11 +49,12 @@ const Home: NextPage = () => {
 
   const hanleClick = (id: string) => {
     setUserContext({
-      currentUser: users?.find((user) => user.id === id),
-      contacts: users?.filter((user) => user.id !== id),
+      //@ts-ignore
+      currentUser: users.find((user) => user.id === id),
+      contacts: users!.filter((user) => user.id !== id),
     });
 
-    router.push("/dashboard")
+    router.push("/dashboard");
   };
 
   return (
@@ -81,7 +82,7 @@ const Home: NextPage = () => {
 
         <AvatarWrapper>
           {users?.map(({ name, avatarUrl, id }) => (
-            <AvatarHug onClick={() => hanleClick(id)}>
+            <AvatarHug onClick={() => hanleClick(id)} key={id}>
               <Avatar
                 alt={name}
                 src={avatarUrl}

@@ -14,7 +14,7 @@ export const DashboardHeader = () => {
       />
 
       <Avatar
-        src={userContext.currentUser.avatarUrl}
+        src={userContext.currentUser?.avatarUrl ?? ""}
         style={{
           height: "32px",
           width: "32px",
