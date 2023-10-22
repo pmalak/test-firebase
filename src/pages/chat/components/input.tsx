@@ -27,6 +27,7 @@ export const Input = () => {
         content: value,
         createdAt: new Date(),
       };
+      console.log("newMessage", newMessage)
 
       const selectedDoc = doc(db, "chats", chatId as string);
       await updateDoc(selectedDoc, {

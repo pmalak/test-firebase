@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export type User = {
   id: string;
   name: string;
@@ -10,14 +12,14 @@ export type Message = {
   id: string;
   content: string;
   author: User;
-  createdAt: Date;
+  createdAt: Date | Timestamp;
 };
 
 export type Chat = {
   id: string;
-  chatName: string;
+  chatName?: string;
   messages: Message[];
   lastMessage: Message | null;
   members: string[];
-  avatar: string;
+  
 };

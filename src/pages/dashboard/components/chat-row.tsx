@@ -1,6 +1,7 @@
 import { Chat } from "@/types";
-import { useChatMembersForHeader } from "@/utils/helpers";
+import { getFormatTimeOrDate, useChatMembersForHeader } from "@/utils/helpers";
 import { Avatar, Typography } from "@material-ui/core";
+import { Timestamp } from "firebase/firestore";
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
@@ -33,9 +34,9 @@ export const ChatRow = ({ chat: { id, lastMessage, members } }: Props) => {
           {lastMessage?.content}
         </Typography>
 
-        {/* <Typography style={{ fontSize: "13px" }} >
-          {lastMessage?.createdAt?.toLocaleDateString()}
-        </Typography> */}
+        <Typography style={{ fontSize: "13px" }}>
+          {getFormatTimeOrDate(lastMessage?.createdAt as Timestamp)}
+        </Typography>
       </RowWrapper>
     </Link>
   );

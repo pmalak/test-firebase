@@ -30,7 +30,6 @@ export const FavoriteContacts = ({ chats }: Props) => {
       lastMessage: null,
       members: [currentUser!.id, contact.id],
       chatName: contact.name,
-      avatar: contact.avatarUrl,
     };
 
     try {
