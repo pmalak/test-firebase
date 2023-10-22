@@ -2,7 +2,8 @@ import { useUserContext } from "@/components/user-context";
 
 import { Chat, User } from "@/types";
 import db from "@/utils/firebase";
-import { Box, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
+import Box from "@material-ui/core/Box";
 import {
   collection,
   addDoc,
@@ -69,9 +70,9 @@ export const FavoriteContacts = ({ chats }: Props) => {
 
   return (
     <div>
-      <Box p={2}>
-        <Typography variant="h5">Favorites</Typography>
-      </Box>
+      <Typography variant="h5" style={{ padding: "16px" }}>
+        Favorite contacts
+      </Typography>
 
       <OverflowWrapper>
         <FavoritesWrapper>

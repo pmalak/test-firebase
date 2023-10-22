@@ -78,6 +78,10 @@ const TheThing = styled(TextField)`
   textarea {
     color: white;
   }
+
+  .MuiOutlinedInput-multiline {
+    padding: 14px
+  }
 `;
 
 const InputRow = styled.div`
