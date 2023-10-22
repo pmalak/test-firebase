@@ -22,10 +22,14 @@ const MainLayout = styled.div`
 const MaxWidth = styled.div`
   padding: 24px 0;
   width: 100%;
-  max-width: 375px;
   height: 100%;
-  max-height: 820px;
+  max-height: 100vh;
   background-color: ${COLORS.mainBg};
   box-shadow: 40px 40px 100px 0px rgba(24, 48, 63, 0.5);
-  border-radius: 32px;
+  
+  @media (min-width: 450px) {
+    max-height: 720px;
+    max-width: 375px;
+    border-radius: 32px;
+  }
 `;

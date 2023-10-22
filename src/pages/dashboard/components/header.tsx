@@ -1,6 +1,7 @@
 import { useUserContext } from "@/components/user-context";
 import { Avatar } from "@material-ui/core";
 import Image from "next/image";
+import Link from "next/link";
 import styled from "styled-components";
 
 export const DashboardHeader = () => {
@@ -8,12 +9,14 @@ export const DashboardHeader = () => {
 
   return (
     <Wrapper>
-      <Image
-        width={118}
-        height={40}
-        src="https://crystallize.com/static/logo/crystallize-logo.svg"
-        alt="Crystallize logo"
-      />
+      <Link href="/">
+        <Image
+          width={118}
+          height={40}
+          src="https://crystallize.com/static/logo/crystallize-logo.svg"
+          alt="Crystallize logo"
+        />
+      </Link>
 
       <Avatar
         src={currentUser?.avatarUrl ?? ""}
