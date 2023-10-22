@@ -3,7 +3,6 @@ import { useUserContext } from "@/components/user-context";
 import { Chat, User } from "@/types";
 import db from "@/utils/firebase";
 import { Typography } from "@material-ui/core";
-import Box from "@material-ui/core/Box";
 import {
   collection,
   addDoc,

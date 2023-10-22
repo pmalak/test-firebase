@@ -8,6 +8,7 @@ import { NextPage } from "next";
 
 import { useUserContext } from "@/components/user-context";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -33,9 +34,11 @@ const Home: NextPage = () => {
       </Head>
 
       <Wrapper>
-        <img
+        <Image
           src="https://crystallize.com/static/logo/crystallize-logo.svg"
-          alt=""
+          width={251}
+          height={85}
+          alt="Crystallize logo"
         />
         <Typography variant="h4" gutterBottom>
           chat

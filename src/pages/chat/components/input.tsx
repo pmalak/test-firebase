@@ -1,5 +1,5 @@
 import { IconButton, TextField } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import SendIcon from "@material-ui/icons/Send";
 
@@ -19,7 +19,7 @@ export const Input = () => {
     setValue(event.target.value);
   };
 
-  const submitMessage = async () => {
+  const submitMessage = useCallback(async () => {
     if (value !== "") {
       const newMessage = {
         id: `${new Date()} ${value}`,
@@ -36,7 +36,7 @@ export const Input = () => {
 
       setValue("");
     }
-  };
+  }, [chatId, currentUser, value]);
 
   useEffect(() => {
     const keyDownHandler = (event: KeyboardEvent) => {

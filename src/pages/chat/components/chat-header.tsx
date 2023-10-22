@@ -1,16 +1,15 @@
-import { Avatar, Grid, IconButton, Typography } from "@material-ui/core";
+import { Avatar, IconButton, Typography } from "@material-ui/core";
 import React from "react";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import Link from "next/link";
 import { Chat } from "@/types";
 import styled from "styled-components";
-import { useUserContext } from "@/components/user-context";
 import { useChatMembersForHeader } from "@/utils/helpers";
 type Props = {
   chat: Chat;
 };
 
-export const ChatHeader = ({ chat: { chatName, avatar, members } }: Props) => {
+export const ChatHeader = ({ chat: { chatName, members } }: Props) => {
   const chatMembers = useChatMembersForHeader(members);
 
   return (
@@ -30,7 +29,6 @@ export const ChatHeader = ({ chat: { chatName, avatar, members } }: Props) => {
           marginRight: "8px",
         }}
       />
-
 
       <Typography>{chatMembers[0].name}</Typography>
     </Wrapper>

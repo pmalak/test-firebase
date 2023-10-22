@@ -7,11 +7,6 @@ import { useRouter } from "next/router";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useContext } from "react";
 
-type UseContext = {
-  currentUser: User;
-  contacts: User[];
-};
-
 type Context = {
   currentUser: User | undefined;
   allUsers: User[] | undefined;

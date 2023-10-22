@@ -1,5 +1,6 @@
 import { useUserContext } from "@/components/user-context";
 import { Avatar } from "@material-ui/core";
+import Image from "next/image";
 import styled from "styled-components";
 
 export const DashboardHeader = () => {
@@ -7,7 +8,12 @@ export const DashboardHeader = () => {
 
   return (
     <Wrapper>
-      <img src="https://crystallize.com/static/logo/crystallize-logo.svg" />
+      <Image
+        width={118}
+        height={40}
+        src="https://crystallize.com/static/logo/crystallize-logo.svg"
+        alt="Crystallize logo"
+      />
 
       <Avatar
         src={currentUser?.avatarUrl ?? ""}

@@ -1,4 +1,5 @@
 import { User } from "@/types";
+import Image from "next/image";
 import { styled } from "styled-components";
 
 type Props = {
@@ -10,7 +11,7 @@ export const ContactItem = ({ contact, handleClick }: Props) => {
   const { avatarUrl } = contact;
   return (
     <ImageWrapper onClick={() => handleClick(contact)}>
-      <img src={avatarUrl} />
+      <Image width={140} height={140} alt="user image" src={avatarUrl} />
     </ImageWrapper>
   );
 };

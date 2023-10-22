@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import { Chat } from "@/types";
-import Link from "next/link";
 import { ChatRow } from "./chat-row";
 
 type Props = {

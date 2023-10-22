@@ -1,6 +1,6 @@
 import { Chat } from "@/types";
 import { useChatMembersForHeader } from "@/utils/helpers";
-import { Avatar, Box, Typography } from "@material-ui/core";
+import { Avatar, Typography } from "@material-ui/core";
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";

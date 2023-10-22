@@ -31,8 +31,6 @@ const Dashboard: NextPage = ({}) => {
       const unsubscribe = onSnapshot(queryChats, (querySnapshot) => {
         const chats: Chat[] = [];
         querySnapshot.forEach((doc) => {
-          const x = {};
-
           chats.push({ id: doc.id, ...doc.data() } as Chat);
         });
         setRealChats(chats);

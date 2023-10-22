@@ -1,6 +1,6 @@
 import { useUserContext } from "@/components/user-context";
 import { Chat } from "@/types";
-import { Box, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 
