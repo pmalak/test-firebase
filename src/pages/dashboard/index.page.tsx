@@ -30,6 +30,7 @@ const Dashboard: NextPage = ({}) => {
 
       const unsubscribe = onSnapshot(queryChats, (querySnapshot) => {
         const chatsData: Chat[] = [];
+
         querySnapshot.forEach((doc) => {
           chatsData.push({ id: doc.id, ...doc.data() } as Chat);
         });

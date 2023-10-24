@@ -16,29 +16,32 @@ export const ChatRow = ({ chat: { id, lastMessage, members } }: Props) => {
   return (
     <Link href={`/chat/${id}`}>
       <RowWrapper>
-        <div className="avatarWrapper">
-          <Avatar
-            alt={chatMembers[0].name}
-            src={chatMembers[0].avatarUrl}
-            style={{
-              boxShadow: "4px 4px 24px 0px rgba(0, 0, 0, 0.45)",
-              height: "48px",
-              width: "49px",
-            }}
-          />
-        </div>
+        <Avatar
+          className="avatar"
+          alt={chatMembers[0].name}
+          src={chatMembers[0].avatarUrl}
+          style={{
+            boxShadow: "4px 4px 24px 0px rgba(0, 0, 0, 0.45)",
+            height: "48px",
+            width: "49px",
+          }}
+        />
 
         <Typography style={{ fontSize: "15px" }}>
           {chatMembers[0].name}
         </Typography>
 
-        <Typography style={{ fontSize: "13px" }} noWrap className="message">
-          {lastMessage?.content}
-        </Typography>
+        {lastMessage && (
+          <>
+            <Typography style={{ fontSize: "13px" }} noWrap className="message">
+              {lastMessage.content}
+            </Typography>
 
-        <Typography style={{ fontSize: "13px" }}>
-          {getFormatTimeOrDate(lastMessage?.createdAt as Timestamp)}
-        </Typography>
+            <Typography style={{ fontSize: "13px" }}>
+              {getFormatTimeOrDate(lastMessage.createdAt as Timestamp)}
+            </Typography>
+          </>
+        )}
       </RowWrapper>
     </Link>
   );
@@ -59,7 +62,7 @@ const RowWrapper = styled.div`
     transition: 0.5s;
   }
 
-  .avatarWrapper {
+  .avatar {
     grid-row: span 2;
   }
 

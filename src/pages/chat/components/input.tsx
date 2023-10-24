@@ -32,6 +32,7 @@ export const Input = () => {
       };
 
       const selectedDoc = doc(db, "chats", chatId as string);
+      
       await updateDoc(selectedDoc, {
         messages: arrayUnion(newMessage),
         lastMessage: newMessage,

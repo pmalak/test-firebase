@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { ContactItem } from "./contact-item";
 import { v4 as uuidv4 } from "uuid";
+import { useCallback } from "react";
 
 type Props = {
   chats: Chat[];
@@ -15,27 +16,29 @@ type Props = {
 
 export const FavoriteContacts = ({ chats }: Props) => {
   const { push } = useRouter();
+
   const { allUsers, currentUser } = useUserContext();
 
-  const handleClick = (contact: User) => {
-    const existingChat = chats.find((chat) =>
-      chat.members.includes(contact.id)
-    );
+  const handleClick = useCallback(
+    (contact: User) => {
+      const existingChat = chats.find((chat) =>
+        chat.members.includes(contact.id)
+      );
 
-    if (contact.id === currentUser?.id) {
-      console.log("self-chat not implemented");
-      return;
-    }
+      if (contact.id === currentUser?.id) {
+        console.log("self-chat not implemented");
+        return;
+      }
 
-    if (!!existingChat) {
-      return push(`chat/${existingChat.id}`);
-    }
+      if (!!existingChat) {
+        return push(`chat/${existingChat.id}`);
+      }
 
-    push(`chat/${uuidv4()}`);
-    localStorage.setItem("newChatParticipant", contact.id);
-
-  
-  };
+      push(`chat/${uuidv4()}`);
+      localStorage.setItem("newChatParticipant", contact.id);
+    },
+    [chats, currentUser?.id, push]
+  );
 
   return (
     <div>

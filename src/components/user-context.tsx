@@ -8,9 +8,9 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useContext } from "react";
 
 type Context = {
-  currentUser: User | undefined;
-  allUsers: User[] | undefined;
-  setCurrenttUser: Dispatch<SetStateAction<User | undefined>>;
+  currentUser: User | null;
+  allUsers: User[];
+  setCurrenttUser: Dispatch<SetStateAction<User | null>>;
 };
 
 const UserContext = React.createContext<Context | null>(null);
@@ -30,18 +30,17 @@ type Props = {
 
 export const UserContextProvider = ({ children }: Props) => {
   const { pathname, push } = useRouter();
-  const [currentUser, setCurrenttUser] = useState<User | undefined>(undefined);
-  const [allUsers, setAllUsers] = useState<User[]>();
+
+  const [currentUser, setCurrenttUser] = useState<User | null>(null);
+  const [allUsers, setAllUsers] = useState<User[]>([]);
 
   useEffect(() => {
     const getUsers = async () => {
-      const q = collection(db, "users");
+      const querySnapshot = await getDocs(collection(db, "users"));
 
-      const querySnapshot = await getDocs(q);
-      const docs = querySnapshot.docs;
-      const data = docs.map((doc) => ({
-        ...doc.data(),
+      const data = querySnapshot.docs.map((doc) => ({
         id: doc.id,
+        ...doc.data(),
       }));
 
       if (data) {
@@ -55,6 +54,7 @@ export const UserContextProvider = ({ children }: Props) => {
   useEffect(() => {
     if (currentUser?.id) {
       const queryUser = doc(db, "users", currentUser?.id);
+
       const unsubscribe = onSnapshot(queryUser, (querySnapshot) => {
         if (querySnapshot) {
           setCurrenttUser({

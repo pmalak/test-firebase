@@ -14,6 +14,7 @@ import { useUserContext } from "@/components/user-context";
 const ChatPage: NextPage = ({}) => {
   const router = useRouter();
   const { chatId } = router.query;
+
   const { currentUser } = useUserContext();
 
   const [chat, setChat] = useState<Chat | null>(null);
@@ -22,7 +23,6 @@ const ChatPage: NextPage = ({}) => {
     if (currentUser?.chats.includes(chatId as string)) {
       const queryChat = doc(db, "chats", chatId as string);
 
-      //todo: maybe not needed if
       if (queryChat) {
         const unsubscribe = onSnapshot(queryChat, (querySnapshot) => {
           if (querySnapshot) {
@@ -35,7 +35,7 @@ const ChatPage: NextPage = ({}) => {
     }
 
     const contact = localStorage.getItem("newChatParticipant");
-    
+
     setChat({
       id: new Date().toDateString(),
       messages: [],
@@ -44,7 +44,7 @@ const ChatPage: NextPage = ({}) => {
     });
   }, [chatId, currentUser, currentUser?.chats]);
 
-  if (currentUser && chatId && chat) {
+  if (chat) {
     return (
       <Wrapper>
         <ChatHeader chat={chat} />
