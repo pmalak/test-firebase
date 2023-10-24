@@ -9,20 +9,24 @@ import { NextPage } from "next";
 import { useUserContext } from "@/components/user-context";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { useCallback } from "react";
 
 const Home: NextPage = () => {
   const router = useRouter();
 
   const { setCurrenttUser, allUsers } = useUserContext();
 
-  const hanleClick = (id: string) => {
-    const selectedUser = allUsers!.find((user) => user.id === id)!;
+  const hanleClick = useCallback(
+    (id: string) => {
+      const selectedUser = allUsers!.find((user) => user.id === id)!;
 
-    setCurrenttUser(selectedUser);
-    localStorage.setItem("currentUserID", selectedUser.id.toString());
+      setCurrenttUser(selectedUser);
+      localStorage.setItem("currentUserID", selectedUser.id.toString());
 
-    router.push("/dashboard");
-  };
+      router.push("/dashboard");
+    },
+    [allUsers, router, setCurrenttUser]
+  );
 
   return (
     <>

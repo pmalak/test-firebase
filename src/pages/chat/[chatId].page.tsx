@@ -17,12 +17,10 @@ const ChatPage: NextPage = ({}) => {
   const { currentUser } = useUserContext();
 
   const [chat, setChat] = useState<Chat | null>(null);
-  console.log("chatId", chatId);
 
   useEffect(() => {
     if (currentUser?.chats.includes(chatId as string)) {
       const queryChat = doc(db, "chats", chatId as string);
-      console.log("if (queryChat) {", queryChat);
 
       //todo: maybe not needed if
       if (queryChat) {
@@ -37,6 +35,7 @@ const ChatPage: NextPage = ({}) => {
     }
 
     const contact = localStorage.getItem("newChatParticipant");
+    
     setChat({
       id: new Date().toDateString(),
       messages: [],
@@ -44,8 +43,6 @@ const ChatPage: NextPage = ({}) => {
       members: [contact!, currentUser?.id ?? ""],
     });
   }, [chatId, currentUser, currentUser?.chats]);
-
-  console.log("realChat", chat);
 
   if (currentUser && chatId && chat) {
     return (

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import { Chat } from "@/types";
 import { ChatRow } from "./chat-row";
 
@@ -6,7 +6,7 @@ type Props = {
   chats: Chat[];
 };
 
-export const Chats: FC<Props> = ({ chats }) => {
+export const Chats = ({ chats }: Props) => {
   return (
     <div>
       {chats.map((chat) => (

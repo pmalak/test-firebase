@@ -22,7 +22,7 @@ export const ChatHeader = ({ chat: { chatName, members } }: Props) => {
 
       <Avatar
         alt={chatName}
-        src={chatMembers[0].avatarUrl}
+        src={chatMembers[0]?.avatarUrl ?? ""}
         style={{
           height: "36px",
           width: "36px",
@@ -30,7 +30,7 @@ export const ChatHeader = ({ chat: { chatName, members } }: Props) => {
         }}
       />
 
-      <Typography>{chatMembers[0].name}</Typography>
+      <Typography>{chatMembers[0]?.name}</Typography>
     </Wrapper>
   );
 };

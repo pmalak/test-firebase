@@ -61,6 +61,7 @@ export const Input = () => {
       await updateDoc(doc(db, "users", contactId as string), {
         chats: arrayUnion(chatId),
       });
+
       return docRef;
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -96,7 +97,7 @@ export const Input = () => {
 
   return (
     <InputRow>
-      <TheThing
+      <StyledTextField
         multiline
         fullWidth
         maxRows={4}
@@ -105,14 +106,14 @@ export const Input = () => {
         variant="outlined"
       />
 
-      <IconButton aria-label="delete" onClick={handleSend}>
+      <IconButton  aria-label="send" onClick={handleSend}>
         <SendIcon />
       </IconButton>
     </InputRow>
   );
 };
 
-const TheThing = styled(TextField)`
+const StyledTextField = styled(TextField)`
   background-color: rgba(0, 0, 0, 0.25);
 
   textarea {

@@ -19,7 +19,7 @@ import { useUserContext } from "@/components/user-context";
 const Dashboard: NextPage = ({}) => {
   const { currentUser } = useUserContext();
 
-  const [realChats, setRealChats] = useState<Chat[]>([]);
+  const [chats, setChats] = useState<Chat[]>([]);
 
   useEffect(() => {
     if (!!currentUser?.chats.length) {
@@ -29,11 +29,11 @@ const Dashboard: NextPage = ({}) => {
       );
 
       const unsubscribe = onSnapshot(queryChats, (querySnapshot) => {
-        const chats: Chat[] = [];
+        const chatsData: Chat[] = [];
         querySnapshot.forEach((doc) => {
-          chats.push({ id: doc.id, ...doc.data() } as Chat);
+          chatsData.push({ id: doc.id, ...doc.data() } as Chat);
         });
-        setRealChats(chats);
+        setChats(chatsData);
       });
 
       return unsubscribe;
@@ -44,9 +44,9 @@ const Dashboard: NextPage = ({}) => {
     <>
       <DashboardHeader />
 
-      <FavoriteContacts chats={realChats} />
+      <FavoriteContacts chats={chats} />
 
-      <Chats chats={realChats} />
+      <Chats chats={chats} />
     </>
   );
 };

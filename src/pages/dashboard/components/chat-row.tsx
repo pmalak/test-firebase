@@ -27,9 +27,11 @@ export const ChatRow = ({ chat: { id, lastMessage, members } }: Props) => {
             }}
           />
         </div>
+
         <Typography style={{ fontSize: "15px" }}>
           {chatMembers[0].name}
         </Typography>
+
         <Typography style={{ fontSize: "13px" }} noWrap className="message">
           {lastMessage?.content}
         </Typography>
