@@ -80,7 +80,7 @@ export const UserContextProvider = ({ children }: Props) => {
     if (!currentUser && allUsers && !storedUserId && pathname !== "/") {
       push("/");
     }
-  }, [currentUser, allUsers, pathname]);
+  }, [currentUser, allUsers, pathname, push]);
 
   return (
     <UserContext.Provider

@@ -3,18 +3,11 @@ import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import SendIcon from "@material-ui/icons/Send";
 
-import {
-  updateDoc,
-  doc,
-  arrayUnion,
-  addDoc,
-  collection,
-  setDoc,
-} from "firebase/firestore";
+import { updateDoc, doc, arrayUnion, setDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import db from "@/utils/firebase";
 import { useUserContext } from "@/components/user-context";
-import { Chat, User } from "@/types";
+import { Chat } from "@/types";
 
 export const Input = () => {
   const router = useRouter();

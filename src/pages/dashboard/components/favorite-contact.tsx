@@ -1,16 +1,10 @@
 import { useUserContext } from "@/components/user-context";
 
 import { Chat, User } from "@/types";
-import db from "@/utils/firebase";
+
 import { Typography } from "@material-ui/core";
-import {
-  collection,
-  addDoc,
-  doc,
-  updateDoc,
-  arrayUnion,
-} from "firebase/firestore";
-import router, { useRouter } from "next/router";
+
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import { ContactItem } from "./contact-item";
 import { v4 as uuidv4 } from "uuid";
@@ -22,8 +16,6 @@ type Props = {
 export const FavoriteContacts = ({ chats }: Props) => {
   const { push } = useRouter();
   const { allUsers, currentUser } = useUserContext();
-
-  ///// move to chat id
 
   const handleClick = (contact: User) => {
     const existingChat = chats.find((chat) =>
@@ -42,7 +34,7 @@ export const FavoriteContacts = ({ chats }: Props) => {
     push(`chat/${uuidv4()}`);
     localStorage.setItem("newChatParticipant", contact.id);
 
-    // createNewChat(contact);
+  
   };
 
   return (
