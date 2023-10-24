@@ -3,10 +3,18 @@ import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import SendIcon from "@material-ui/icons/Send";
 
-import { updateDoc, doc, arrayUnion } from "firebase/firestore";
+import {
+  updateDoc,
+  doc,
+  arrayUnion,
+  addDoc,
+  collection,
+  setDoc,
+} from "firebase/firestore";
 import { useRouter } from "next/router";
 import db from "@/utils/firebase";
 import { useUserContext } from "@/components/user-context";
+import { Chat, User } from "@/types";
 
 export const Input = () => {
   const router = useRouter();
@@ -27,7 +35,6 @@ export const Input = () => {
         content: value,
         createdAt: new Date(),
       };
-      console.log("newMessage", newMessage)
 
       const selectedDoc = doc(db, "chats", chatId as string);
       await updateDoc(selectedDoc, {
@@ -39,12 +46,49 @@ export const Input = () => {
     }
   }, [chatId, currentUser, value]);
 
+  const createNewChat = useCallback(async () => {
+    const contactId = localStorage.getItem("newChatParticipant");
+
+    const newChat: Omit<Chat, "id"> = {
+      messages: [],
+      lastMessage: null,
+      members: [currentUser!.id, contactId as string],
+      chatName: contactId as string,
+    };
+
+    try {
+      const docRef = await setDoc(doc(db, "chats", chatId as string), newChat);
+
+      await updateDoc(doc(db, "users", currentUser!.id), {
+        chats: arrayUnion(chatId),
+      });
+
+      await updateDoc(doc(db, "users", contactId as string), {
+        chats: arrayUnion(chatId),
+      });
+      return docRef;
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }, [chatId, currentUser]);
+
+  const handleSend = useCallback(async () => {
+    if (!currentUser?.chats.includes(chatId as string)) {
+      await createNewChat();
+
+      submitMessage();
+      return;
+    }
+
+    submitMessage();
+  }, [chatId, createNewChat, currentUser?.chats, submitMessage]);
+
   useEffect(() => {
     const keyDownHandler = (event: KeyboardEvent) => {
       if (event.key === "Enter") {
         event.preventDefault();
 
-        submitMessage();
+        handleSend();
       }
     };
 
@@ -53,7 +97,7 @@ export const Input = () => {
     return () => {
       document.removeEventListener("keydown", keyDownHandler);
     };
-  }, [submitMessage]);
+  }, [handleSend]);
 
   return (
     <InputRow>
@@ -66,7 +110,7 @@ export const Input = () => {
         variant="outlined"
       />
 
-      <IconButton aria-label="delete" onClick={submitMessage}>
+      <IconButton aria-label="delete" onClick={handleSend}>
         <SendIcon />
       </IconButton>
     </InputRow>
@@ -81,7 +125,7 @@ const TheThing = styled(TextField)`
   }
 
   .MuiOutlinedInput-multiline {
-    padding: 14px
+    padding: 14px;
   }
 `;
 

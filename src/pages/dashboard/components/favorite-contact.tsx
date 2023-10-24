@@ -13,6 +13,7 @@ import {
 import router, { useRouter } from "next/router";
 import styled from "styled-components";
 import { ContactItem } from "./contact-item";
+import { v4 as uuidv4 } from "uuid";
 
 type Props = {
   chats: Chat[];
@@ -22,32 +23,7 @@ export const FavoriteContacts = ({ chats }: Props) => {
   const { push } = useRouter();
   const { allUsers, currentUser } = useUserContext();
 
-  const chastRef = collection(db, "chats");
-
-  const createNewChat = async (contact: User) => {
-    const newChat: Omit<Chat, "id"> = {
-      messages: [],
-      lastMessage: null,
-      members: [currentUser!.id, contact.id],
-      chatName: contact.name,
-    };
-
-    try {
-      const docRef = await addDoc(chastRef, newChat);
-
-      await updateDoc(doc(db, "users", currentUser!.id), {
-        chats: arrayUnion(docRef.id),
-      });
-
-      await updateDoc(doc(db, "users", contact.id), {
-        chats: arrayUnion(docRef.id),
-      });
-
-      router.push(`/chat/${docRef.id}`);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  };
+  ///// move to chat id
 
   const handleClick = (contact: User) => {
     const existingChat = chats.find((chat) =>
@@ -63,7 +39,10 @@ export const FavoriteContacts = ({ chats }: Props) => {
       return push(`chat/${existingChat.id}`);
     }
 
-    createNewChat(contact);
+    push(`chat/${uuidv4()}`);
+    localStorage.setItem("newChatParticipant", contact.id);
+
+    // createNewChat(contact);
   };
 
   return (

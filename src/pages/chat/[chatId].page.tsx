@@ -9,31 +9,50 @@ import { ChatHeader } from "./components/chat-header";
 import { doc, onSnapshot } from "firebase/firestore";
 import { Chat } from "@/types";
 import db from "@/utils/firebase";
+import { useUserContext } from "@/components/user-context";
 
 const ChatPage: NextPage = ({}) => {
   const router = useRouter();
   const { chatId } = router.query;
+  const { currentUser } = useUserContext();
 
-  const [realChat, setRealChat] = useState<Chat | null>(null);
+  const [chat, setChat] = useState<Chat | null>(null);
+  console.log("chatId", chatId);
 
   useEffect(() => {
-    if (chatId) {
-      const queryChats = doc(db, "chats", chatId as string);
-      const unsubscribe = onSnapshot(queryChats, (querySnapshot) => {
-        if (querySnapshot) {
-          setRealChat(querySnapshot.data() as Chat);
-        }
-      });
+    if (currentUser?.chats.includes(chatId as string)) {
+      const queryChat = doc(db, "chats", chatId as string);
+      console.log("if (queryChat) {", queryChat);
 
-      return unsubscribe;
+      //todo: maybe not needed if
+      if (queryChat) {
+        const unsubscribe = onSnapshot(queryChat, (querySnapshot) => {
+          if (querySnapshot) {
+            setChat(querySnapshot.data() as Chat);
+          }
+        });
+
+        return unsubscribe;
+      }
     }
-  }, [chatId]);
 
-  if (chatId && realChat) {
+    const contact = localStorage.getItem("newChatParticipant");
+    setChat({
+      id: new Date().toDateString(),
+      messages: [],
+      lastMessage: null,
+      members: [contact!, currentUser?.id ?? ""],
+    });
+  }, [chatId, currentUser, currentUser?.chats]);
+
+  console.log("realChat", chat);
+
+  if (currentUser && chatId && chat) {
     return (
       <Wrapper>
-        <ChatHeader chat={realChat} />
-        <Messages messages={realChat?.messages ?? []} />
+        <ChatHeader chat={chat} />
+
+        <Messages messages={chat?.messages ?? []} />
 
         <Input />
       </Wrapper>
