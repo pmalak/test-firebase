@@ -8,6 +8,8 @@ import { useRouter } from "next/router";
 import db from "@/utils/firebase";
 import { useUserContext } from "@/components/user-context";
 import { Chat } from "@/types";
+import { v4 as uuidv4 } from "uuid";
+
 
 export const Input = () => {
   const router = useRouter();
@@ -23,7 +25,7 @@ export const Input = () => {
   const submitMessage = useCallback(async () => {
     if (value !== "") {
       const newMessage = {
-        id: `${new Date()} ${value}`,
+        id: uuidv4(),
         author: currentUser,
         content: value,
         createdAt: new Date(),
